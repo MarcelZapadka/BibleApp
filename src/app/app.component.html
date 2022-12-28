@@ -1,0 +1,73 @@
+<mat-sidenav-container>
+  <mat-sidenav #sideNav mode="over">
+    <mat-toolbar color="primary">
+      <mat-toolbar-row>MENU</mat-toolbar-row>
+    </mat-toolbar>
+    <mat-toolbar class="sidenav-content">
+      <mat-toolbar-row>
+        <mat-form-field appearance="fill">
+          <mat-label>Bible translation</mat-label>
+          <mat-select>
+            <mat-optgroup label="1">
+              <mat-option>
+                Jeden
+              </mat-option>
+            </mat-optgroup>
+          </mat-select>
+        </mat-form-field>
+      </mat-toolbar-row>
+      <mat-toolbar-row>
+        <mat-form-field appearance="fill">
+          <mat-label>Book name</mat-label>
+          <mat-select>
+            <mat-optgroup label="1">
+              <mat-option>
+                Jeden
+              </mat-option>
+            </mat-optgroup>
+          </mat-select>
+        </mat-form-field>
+      </mat-toolbar-row>
+      <mat-toolbar-row>
+        <mat-form-field appearance="fill">
+          <mat-label>Chapter</mat-label>
+          <mat-select>
+            <mat-optgroup label="1">
+              <mat-option>
+                Jeden
+              </mat-option>
+            </mat-optgroup>
+          </mat-select>
+        </mat-form-field>
+      </mat-toolbar-row>
+    </mat-toolbar>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="main-container">
+      <mat-toolbar color="primary">
+        <button mat-icon-button (click)="sideNav.open()">
+          <mat-icon>menu</mat-icon>
+        </button>
+
+        <p>BookName</p>
+      </mat-toolbar>
+
+      <main class="main-content"></main>
+
+      <mat-toolbar class="footer" color="primary">
+        <button mat-mini-fab color="warn">
+          <mat-icon>keyboard_double_arrow_left</mat-icon>
+        </button>
+        <button mat-fab color="warn">
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+        <button mat-fab color="warn">
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+        <button mat-mini-fab color="warn">
+          <mat-icon>keyboard_double_arrow_right</mat-icon>
+        </button>
+      </mat-toolbar>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

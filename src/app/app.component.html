@@ -7,10 +7,10 @@
       <mat-toolbar-row>
         <mat-form-field appearance="fill">
           <mat-label>Bible translation</mat-label>
-          <mat-select>
-            <mat-optgroup label="1">
-              <mat-option>
-                Jeden
+          <mat-select [formControl]="translationSelect">
+            <mat-optgroup label="PL">
+              <mat-option *ngFor="let translation of bibleTranslations" [value]="translation.id">
+                {{translation.viewValue}}
               </mat-option>
             </mat-optgroup>
           </mat-select>
@@ -19,10 +19,15 @@
       <mat-toolbar-row>
         <mat-form-field appearance="fill">
           <mat-label>Book name</mat-label>
-          <mat-select>
-            <mat-optgroup label="1">
-              <mat-option>
-                Jeden
+          <mat-select [formControl]="bookInfoForm">
+            <mat-optgroup label="Old Testament ">
+              <mat-option *ngFor="let bookInfo of currentBibleBookInfo?.oldTestamentList" [value]="bookInfo">
+                {{bookInfo.viewValue}}
+              </mat-option>
+            </mat-optgroup>
+            <mat-optgroup label="New Testament ">
+              <mat-option *ngFor="let bookInfo of currentBibleBookInfo?.newTestamentList" [value]="bookInfo">
+                {{bookInfo.viewValue}}
               </mat-option>
             </mat-optgroup>
           </mat-select>
@@ -32,11 +37,9 @@
         <mat-form-field appearance="fill">
           <mat-label>Chapter</mat-label>
           <mat-select>
-            <mat-optgroup label="1">
-              <mat-option>
-                Jeden
+              <mat-option *ngFor="let chapterNo of currentChaptersRange">
+                {{chapterNo}}
               </mat-option>
-            </mat-optgroup>
           </mat-select>
         </mat-form-field>
       </mat-toolbar-row>
@@ -55,16 +58,16 @@
       <main class="main-content"></main>
 
       <mat-toolbar class="footer" color="primary">
-        <button mat-mini-fab color="warn">
+        <button mat-mini-fab color="accent">
           <mat-icon>keyboard_double_arrow_left</mat-icon>
         </button>
-        <button mat-fab color="warn">
+        <button mat-fab color="accent">
           <mat-icon>chevron_left</mat-icon>
         </button>
-        <button mat-fab color="warn">
+        <button mat-fab color="accent">
           <mat-icon>chevron_right</mat-icon>
         </button>
-        <button mat-mini-fab color="warn">
+        <button mat-mini-fab color="accent">
           <mat-icon>keyboard_double_arrow_right</mat-icon>
         </button>
       </mat-toolbar>

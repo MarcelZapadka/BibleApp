@@ -7,10 +7,10 @@
       <mat-toolbar-row>
         <mat-form-field appearance="fill">
           <mat-label>Bible translation</mat-label>
-          <mat-select>
+          <mat-select [formControl]="translationSelect">
             <mat-optgroup label="PL">
-              <mat-option>
-                UBG
+              <mat-option *ngFor="let translation of bibleTranslations" [value]="translation.id">
+                {{translation.viewValue}}
               </mat-option>
             </mat-optgroup>
           </mat-select>
@@ -19,10 +19,15 @@
       <mat-toolbar-row>
         <mat-form-field appearance="fill">
           <mat-label>Book name</mat-label>
-          <mat-select>
+          <mat-select [formControl]="bookInfoForm">
             <mat-optgroup label="Old Testament ">
-              <mat-option>
-                Genesis
+              <mat-option *ngFor="let bookInfo of currentBibleBookInfo?.oldTestamentList" [value]="bookInfo">
+                {{bookInfo.viewValue}}
+              </mat-option>
+            </mat-optgroup>
+            <mat-optgroup label="New Testament ">
+              <mat-option *ngFor="let bookInfo of currentBibleBookInfo?.newTestamentList" [value]="bookInfo">
+                {{bookInfo.viewValue}}
               </mat-option>
             </mat-optgroup>
           </mat-select>
@@ -32,8 +37,8 @@
         <mat-form-field appearance="fill">
           <mat-label>Chapter</mat-label>
           <mat-select>
-              <mat-option>
-                1
+              <mat-option *ngFor="let chapterNo of currentChaptersRange">
+                {{chapterNo}}
               </mat-option>
           </mat-select>
         </mat-form-field>

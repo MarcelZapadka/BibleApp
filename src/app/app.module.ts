@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { MaterialModule } from './material/material/material.module';
 import { BibleApiService } from './bible-api.service';
 import { ModelMapperService } from './model-mapper.service';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ModelMapperService } from './model-mapper.service';
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [
     BibleApiService,

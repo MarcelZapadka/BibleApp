@@ -9,22 +9,19 @@
 // Be sure that you only ever include this mixin once!
 @include mat.core();
 
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$BibleApp-primary: mat.define-palette(mat.$amber-palette, 300);
-$BibleApp-accent: mat.define-palette(mat.$indigo-palette, A200);
-
-// The warn palette is optional (defaults to red).
-$BibleApp-warn: mat.define-palette(mat.$red-palette);
-
-// Create the theme object. A theme consists of configurations for individual
-// theming systems such as "color" or "typography".
 $BibleApp-theme: mat.define-light-theme((
   color: (
-    primary: $BibleApp-primary,
-    accent: $BibleApp-accent,
-    warn: $BibleApp-warn,
+    primary: mat.define-palette(mat.$indigo-palette),
+    accent: mat.define-palette(mat.$grey-palette, A200, A100, A400),
+    warn: mat.define-palette(mat.$pink-palette),
+  )
+));
+
+$BibleApp-dark-theme: mat.define-dark-theme((
+  color: (
+    primary: mat.define-palette(mat.$grey-palette),
+    accent: mat.define-palette(mat.$grey-palette, A200, A100, A400),
+    warn: mat.define-palette(mat.$pink-palette),
   )
 ));
 
@@ -32,6 +29,14 @@ $BibleApp-theme: mat.define-light-theme((
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include mat.all-component-themes($BibleApp-theme);
+
+body.dark-mode {
+  @include mat.all-component-themes($BibleApp-dark-theme);
+}
+
+@media (prefers-color-scheme: dark) {
+  @include mat.all-component-themes($BibleApp-dark-theme);
+}
 
 /* You can add global styles to this file, and also import other style files */
 

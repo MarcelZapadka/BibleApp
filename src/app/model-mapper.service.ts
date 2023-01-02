@@ -34,6 +34,19 @@ export class ModelMapperService {
   }
 
   private buildBookInfoList(bookInfoDtoList: Array<BookInfoDTO>): Array<BookInfo> {
-    return bookInfoDtoList.map((dto) => new BookInfo(dto.id, dto.name, dto.chapterLength));
+    return bookInfoDtoList.map((dto) => new BookInfo(dto.id, dto.name, dto.chapterLength, dto.index));
+  }
+
+  public addIndexToBooks(bibleBooks: Array<BibleBooksInfo>):void {
+    bibleBooks!.forEach((object: BibleBooksInfo ): void => {
+      object.oldTestamentList.forEach((object:BookInfo, index: number) => {
+        object.index = index + 1;
+      })
+    });
+    bibleBooks!.forEach((object: BibleBooksInfo): void => {
+      object.newTestamentList.forEach((object:BookInfo, index: number) => {
+        object.index = index + 40;
+      })
+    })
   }
 }

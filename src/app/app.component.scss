@@ -3,8 +3,14 @@
   flex-direction: column;
   height: 100vh;
 
+  .navbar {
+    margin-bottom: 30px;
+  }
+
   .main-content {
     flex-grow: 1;
+    padding: 10px 170px;
+    font-size: 22px;
   }
 }
 

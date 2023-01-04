@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { BibleApiService } from './bible-api.service';
-import { BibleVerseContentDTO, BibleVerseContentInfoDTO } from './dto';
-import { BibleTranslation, BibleBooksInfo, BookInfo } from './model';
-import {ModelMapperService} from './model-mapper.service';
+import { BibleTranslation, BibleBooksInfo, BookInfo, BibleVerseContent, BibleVerseContentInfo } from './model';
 
 @Component({
   selector: 'app-root',
@@ -22,16 +20,15 @@ export class AppComponent implements OnInit {
   chapterForm: FormControl = new FormControl();
   selectedChapter?: number;
   currentTranslation?: string;
-  currentVerseContent?: Array<BibleVerseContentDTO>;
+  currentVerseContent?: Array<BibleVerseContent>;
   bookNames?: Array<string>;
-  currentBookIndex: number = 0;
+  currentBookIndex: number = 0; // to do: change to currentBookCount
 
   constructor(
     private api: BibleApiService,
-    private modelMapper: ModelMapperService,
     ){};
 
-  getVerses(): Observable<BibleVerseContentInfoDTO> {
+  getVerses(): Observable<BibleVerseContentInfo> {
    return this.api.getVerseContent(this.currentTranslation!, this.currentBookInfo?.id!, this.selectedChapter!);
   };
 
@@ -43,17 +40,15 @@ export class AppComponent implements OnInit {
     } else return
   };
 
-  addIndexToBooks():void {
-    this.modelMapper.addIndexToBooks(this.bibleBooks!);
-  };
-
   updateMenu(): void {
-    if (this.translationSelect.value !== undefined && this.translationSelect.value !== undefined) {
-      if (this.currentBookIndex! < 40) {
-        this.bookInfoForm.setValue(this.currentBibleBookInfo?.oldTestamentList[this.currentBookIndex!]);
-      } else if (this.currentBookIndex! > 41 ) {
-        this.bookInfoForm.setValue(this.currentBibleBookInfo?.newTestamentList[this.currentBookIndex!]);
-      }
+    if (this.translationSelect.value === undefined && this.translationSelect.value === undefined) {
+      return
+    }
+    console.log(this.currentBookIndex)
+    if (this.currentBookIndex < 39) {
+      this.bookInfoForm.setValue(this.currentBibleBookInfo?.oldTestamentList[this.currentBookIndex!]);
+    } else {
+      this.bookInfoForm.setValue(this.currentBibleBookInfo?.newTestamentList[this.currentBookIndex!]);
     }
   };
 
@@ -63,8 +58,8 @@ export class AppComponent implements OnInit {
     if (this.currentBookInfo?.chapterLength === this.chapterForm.value) {
       return
     } else {
-      currentChapter = this.chapterForm.value;
-      this.chapterForm.setValue(+currentChapter + 1);
+      currentChapter = +this.chapterForm.value;
+      this.chapterForm.setValue(currentChapter + 1);
     }
   };
 
@@ -73,8 +68,8 @@ export class AppComponent implements OnInit {
     if (this.chapterForm.value === 1) {
       return
     } else {
-      currentChapter = this.chapterForm.value;
-      this.chapterForm.setValue(+currentChapter - 1);
+      currentChapter = +this.chapterForm.value;
+      this.chapterForm.setValue(currentChapter - 1);
     }
   };
 
@@ -92,7 +87,6 @@ export class AppComponent implements OnInit {
     this.api.getContentInfo().subscribe(response => {
       this.bibleTranslations = response.translationList;
       this.bibleBooks = response.bookList;
-      this.addIndexToBooks();
       this.chapterForm.setValue(1);
     });
 

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { BibleContentInfoDTO, BibleVerseContentInfoDTO} from './dto';
-import { BibleContentInfo } from './model';
+import { BibleContentInfo, BibleVerseContentInfo } from './model';
 import { ModelMapperService } from './model-mapper.service';
 
 @Injectable({
@@ -24,7 +24,7 @@ export class BibleApiService {
     )
   }
 
-  getVerseContent(translation: string, book: string, chapter: number): Observable<BibleVerseContentInfoDTO> {
+  getVerseContent(translation: string, book: string, chapter: number): Observable<BibleVerseContentInfo> {
     return this.http.get<BibleVerseContentInfoDTO>(
       `${environment.apiHttp.protocol}://${environment.apiHttp.host}/content/bible/${translation}/${book}/${chapter}`)
   }

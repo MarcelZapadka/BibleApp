@@ -21,7 +21,6 @@ export interface BookInfoDTO {
   id: string;
   name: string;
   chapterLength: number;
-  index: number
 }
 
 export interface BibleContentInfoDTO {

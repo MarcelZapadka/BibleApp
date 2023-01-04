@@ -40,6 +40,11 @@ export class BibleBooksInfo {
     public oldTestamentList: Array<BookInfo>, 
     public newTestamentList: Array<BookInfo>, 
   ) {}
+  
+  getBook(count: number): BookInfo {
+    return null as unknown as BookInfo
+    // to do
+  }
 }
 
 export class BibleContentInfo {
@@ -47,4 +52,14 @@ export class BibleContentInfo {
     public translationList: Array<BibleTranslation>,
     public bookList: Array<BibleBooksInfo>,
   ) {}
+}
+
+export interface BibleVerseContentInfo {
+  no: number,
+  verseList: Array<BibleVerseContent>
+}
+
+export interface BibleVerseContent {
+  no: number,
+  value: string
 }

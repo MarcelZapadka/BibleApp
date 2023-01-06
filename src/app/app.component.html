@@ -55,8 +55,18 @@
         <p>{{currentBookInfo?.viewValue}}</p>
       </mat-toolbar>
 
-      <main class="main-content" *ngFor="let verse of currentVerseContent; index as i">
-        {{i + 1}} - {{verse?.value}}
+      <main class="main-content">
+        <section class="content-wrapper" *ngFor="let verse of currentVerseContent; index as i">
+          <p class="verse-number">
+            {{i + 1}}
+          </p>
+          <p>
+            -
+          </p>
+          <p>
+            {{verse?.value}}
+          </p>
+        </section>
       </main>
 
       <mat-toolbar class="footer" color="primary">

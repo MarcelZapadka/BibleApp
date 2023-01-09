@@ -30,7 +30,7 @@ export class BookInfo {
     public id: string,
     public viewValue: string,
     public chapterLength: number,
-    public index: number,
+    public counter: number,
   ) {}
 }
 
@@ -41,9 +41,12 @@ export class BibleBooksInfo {
     public newTestamentList: Array<BookInfo>, 
   ) {}
   
-  getBook(count: number): BookInfo {
-    return null as unknown as BookInfo
-    // to do
+  getBook(count: number): BookInfo | undefined{
+    if (count <= 39) {
+      return this.oldTestamentList.find(value => value.counter === count);
+    } else {
+      return this.newTestamentList.find(value => value.counter === count);
+    }
   }
 }
 

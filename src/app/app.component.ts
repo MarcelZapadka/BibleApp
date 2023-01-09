@@ -22,11 +22,11 @@ export class AppComponent implements OnInit {
   currentTranslation?: string;
   currentVerseContent?: Array<BibleVerseContent>;
   bookNames?: Array<string>;
-  currentBookIndex: number = 0; // to do: change to currentBookCount
+  currentBookCount: number = 0;
 
   constructor(
     private api: BibleApiService,
-    ){};
+  ){};
 
   getVerses(): Observable<BibleVerseContentInfo> {
    return this.api.getVerseContent(this.currentTranslation!, this.currentBookInfo?.id!, this.selectedChapter!);
@@ -41,18 +41,12 @@ export class AppComponent implements OnInit {
   };
 
   updateMenu(): void {
-    if (this.translationSelect.value === undefined && this.translationSelect.value === undefined) {
+    if (this.translationSelect.value === undefined && this.bookInfoForm.value === undefined) {
       return
     }
-    console.log(this.currentBookIndex)
-    if (this.currentBookIndex < 39) {
-      this.bookInfoForm.setValue(this.currentBibleBookInfo?.oldTestamentList[this.currentBookIndex!]);
-    } else {
-      this.bookInfoForm.setValue(this.currentBibleBookInfo?.newTestamentList[this.currentBookIndex!]);
-    }
-  };
+    this.bookInfoForm.setValue(this.currentBibleBookInfo?.getBook(this.currentBookCount));
+  }
 
-  // To do: refactor buttons funcionality (switching between new and old testament)
   nextChapter():void {
     let currentChapter: number;
     if (this.currentBookInfo?.chapterLength === this.chapterForm.value) {
@@ -74,24 +68,24 @@ export class AppComponent implements OnInit {
   };
 
   nextBook(): void {
-    this.currentBookIndex = this.currentBookIndex + 1;
+    this.currentBookCount = this.currentBookCount + 1;
     this.updateMenu();
   };
 
   previousBook(): void {
-    this.currentBookIndex = this.currentBookIndex - 1;
+    this.currentBookCount = this.currentBookCount - 1;
     this.updateMenu();
   };
   
   ngOnInit(): void {
-    this.api.getContentInfo().subscribe(response => {
-      this.bibleTranslations = response.translationList;
-      this.bibleBooks = response.bookList;
+    this.api.getContentInfo().subscribe(bibleContentInfo => {
+      this.bibleTranslations = bibleContentInfo.translationList;
+      this.bibleBooks = bibleContentInfo.bookList;
       this.chapterForm.setValue(1);
     });
 
     this.translationSelect.valueChanges.subscribe(value => {
-     this.currentBibleBookInfo = this.bibleBooks?.find(object => object.translationId === value);
+     this.currentBibleBookInfo = this.bibleBooks?.find(bibleBook => bibleBook.translationId === value);
      this.currentTranslation = value;
      this.updateMenu();
      this.updateContent();
@@ -100,7 +94,7 @@ export class AppComponent implements OnInit {
     this.bookInfoForm.valueChanges.subscribe(value => {
       this.currentBookInfo = value;
       this.currentChaptersRange = Array(value.chapterLength).fill(null).map((_, index) => index + 1);
-      this.currentBookIndex = value.index - 1;
+      this.currentBookCount = value.counter;
       this.chapterForm.setValue(1);
       this.updateContent();
     });

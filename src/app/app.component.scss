@@ -5,6 +5,19 @@
 
   .main-content {
     flex-grow: 1;
+    padding: 10px 170px;
+    font-size: 22px;
+    overflow-y: scroll;
+
+    .content-wrapper {
+      display: flex;
+      gap: 5px;
+
+      .verse-number {
+        font-size: 18px;
+        padding-top: 7.2px;
+      }
+    }
   }
 }
 

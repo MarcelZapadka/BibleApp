@@ -27,3 +27,13 @@ export interface BibleContentInfoDTO {
   translationBook: TranslationBookDTO;
   translationName: TranslationNameDTO;
 }
+
+export interface BibleVerseContentInfoDTO {
+  no: number,
+  verseList: Array<BibleVerseContentDTO>
+}
+
+export interface BibleVerseContentDTO {
+  no: number,
+  value: string
+}

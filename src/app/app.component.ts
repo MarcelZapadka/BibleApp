@@ -126,7 +126,5 @@ export class AppComponent implements OnInit {
       this.updateContent();
       this.updateUrl();
     });
-
-    console.log("To jest console log z ngOnInit")
   }
 }

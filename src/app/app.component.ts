@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
   currentTranslation?: string;
   currentVerseContent?: Array<BibleVerseContent>;
   bookNames?: Array<string>;
-  currentBookCount: number = 0;
+  currentBookCount: number = 1;
 
   constructor(
     private api: BibleApiService,
@@ -50,7 +50,7 @@ export class AppComponent implements OnInit {
   nextChapter():void {
     let currentChapter: number;
     if (this.currentBookInfo?.chapterLength === this.chapterForm.value) {
-      return
+      this.nextBook();
     } else {
       currentChapter = +this.chapterForm.value;
       this.chapterForm.setValue(currentChapter + 1);
@@ -60,7 +60,8 @@ export class AppComponent implements OnInit {
   previousChapter(): void {
     let currentChapter: number;
     if (this.chapterForm.value === 1) {
-      return
+      this.previousBook();
+      this.chapterForm.setValue(this.currentChaptersRange![this.currentChaptersRange!.length - 1]);
     } else {
       currentChapter = +this.chapterForm.value;
       this.chapterForm.setValue(currentChapter - 1);
@@ -68,12 +69,12 @@ export class AppComponent implements OnInit {
   };
 
   nextBook(): void {
-    this.currentBookCount = this.currentBookCount + 1;
+    this.currentBookCount += 1;
     this.updateMenu();
   };
 
   previousBook(): void {
-    this.currentBookCount = this.currentBookCount - 1;
+    this.currentBookCount -= 1;
     this.updateMenu();
   };
   
@@ -102,6 +103,6 @@ export class AppComponent implements OnInit {
     this.chapterForm.valueChanges.subscribe(value => {
       this.selectedChapter = value;
       this.updateContent();
-    });
+    });      
   }
 }

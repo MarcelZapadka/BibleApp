@@ -4,7 +4,8 @@ import { AppComponent } from './app.component';
 
 const routes: Routes = [
   {path: ':translation/:book/:chapter', component: AppComponent},
-  {path: '**', component: AppComponent}
+  {path: '', component: AppComponent},
+  // to do: error page '**'
 ];
 
 @NgModule({

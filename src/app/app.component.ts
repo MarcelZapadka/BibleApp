@@ -94,7 +94,7 @@ export class AppComponent implements OnInit {
       error => console.log(error),
       () => {       
         let route = this.activatedRoute.firstChild!.snapshot.paramMap;
-        if (!route.has("translation" && "book" && "chapter")) {
+        if (!route.has("translation")) {
           this.translationSelect.setValue(this.bibleTranslations![0].id);
         } else {
           this.translationSelect.setValue(route.get('translation'));
@@ -126,5 +126,7 @@ export class AppComponent implements OnInit {
       this.updateContent();
       this.updateUrl();
     });
+
+    console.log("To jest console log z ngOnInit")
   }
 }

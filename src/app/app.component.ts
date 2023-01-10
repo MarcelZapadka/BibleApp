@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { BibleApiService } from './bible-api.service';
 import { BibleTranslation, BibleBooksInfo, BookInfo, BibleVerseContent, BibleVerseContentInfo } from './model';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -26,6 +27,8 @@ export class AppComponent implements OnInit {
 
   constructor(
     private api: BibleApiService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ){};
 
   getVerses(): Observable<BibleVerseContentInfo> {
@@ -44,7 +47,7 @@ export class AppComponent implements OnInit {
     if (this.translationSelect.value === undefined && this.bookInfoForm.value === undefined) {
       return
     }
-    this.bookInfoForm.setValue(this.currentBibleBookInfo?.getBook(this.currentBookCount));
+    this.bookInfoForm.setValue(this.currentBibleBookInfo?.getBookByCount(this.currentBookCount));
   }
 
   nextChapter():void {
@@ -77,19 +80,36 @@ export class AppComponent implements OnInit {
     this.currentBookCount -= 1;
     this.updateMenu();
   };
+
+  updateUrl(): void {
+    this.router.navigateByUrl(`${this.translationSelect.value}/${this.bookInfoForm.value.id}/${this.chapterForm.value}`);
+  }
   
   ngOnInit(): void {
-    this.api.getContentInfo().subscribe(bibleContentInfo => {
-      this.bibleTranslations = bibleContentInfo.translationList;
-      this.bibleBooks = bibleContentInfo.bookList;
-      this.chapterForm.setValue(1);
-    });
+    this.api.getContentInfo().subscribe(
+      bibleContentInfo => {
+        this.bibleTranslations = bibleContentInfo.translationList;
+        this.bibleBooks = bibleContentInfo.bookList;
+      },
+      error => console.log(error),
+      () => {       
+        let route = this.activatedRoute.firstChild!.snapshot.paramMap;
+        if (!route.has("translation" && "book" && "chapter")) {
+          this.translationSelect.setValue(this.bibleTranslations![0].id);
+        } else {
+          this.translationSelect.setValue(route.get('translation'));
+          this.bookInfoForm.setValue(this.currentBibleBookInfo?.getBookById(route.get('book')!));
+          this.chapterForm.setValue(+route.get('chapter')!);
+        }
+      }
+    );
 
     this.translationSelect.valueChanges.subscribe(value => {
      this.currentBibleBookInfo = this.bibleBooks?.find(bibleBook => bibleBook.translationId === value);
      this.currentTranslation = value;
      this.updateMenu();
      this.updateContent();
+     this.updateUrl();
     });
 
     this.bookInfoForm.valueChanges.subscribe(value => {
@@ -98,11 +118,13 @@ export class AppComponent implements OnInit {
       this.currentBookCount = value.counter;
       this.chapterForm.setValue(1);
       this.updateContent();
+      this.updateUrl();
     });
 
     this.chapterForm.valueChanges.subscribe(value => {
       this.selectedChapter = value;
       this.updateContent();
-    });      
+      this.updateUrl();
+    });
   }
 }

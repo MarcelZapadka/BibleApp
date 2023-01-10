@@ -41,12 +41,20 @@ export class BibleBooksInfo {
     public newTestamentList: Array<BookInfo>, 
   ) {}
   
-  getBook(count: number): BookInfo | undefined{
+  getBookByCount(count: number): BookInfo | undefined {
     if (count <= 39) {
       return this.oldTestamentList.find(value => value.counter === count);
     } else {
       return this.newTestamentList.find(value => value.counter === count);
     }
+  }
+
+  getBookById(id: string): BookInfo | undefined {
+    let oldTestamentBook;
+    let newTestamentBook;
+    oldTestamentBook = this.oldTestamentList.find(book => book.id === id);
+    newTestamentBook = this.newTestamentList.find(book => book.id === id);
+    return oldTestamentBook ?? newTestamentBook;
   }
 }
 

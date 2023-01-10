@@ -70,16 +70,16 @@
       </main>
 
       <mat-toolbar class="footer" color="primary">
-        <button mat-mini-fab color="accent" (click)="previousBook()">
+        <button mat-mini-fab color="accent" [disabled]="currentBookCount === 1" (click)="previousBook()">
           <mat-icon>keyboard_double_arrow_left</mat-icon>
         </button>
-        <button mat-fab color="accent" (click)="previousChapter()">
+        <button mat-fab color="accent" [disabled]="currentBookCount === 1 && chapterForm.value === 1" (click)="previousChapter()">
           <mat-icon>chevron_left</mat-icon>
         </button>
-        <button mat-fab color="accent" (click)="nextChapter()" >
+        <button mat-fab color="accent" [disabled]="currentBookCount === 66 && chapterForm.value === 22" (click)="nextChapter()" >
           <mat-icon>chevron_right</mat-icon>
         </button>
-        <button mat-mini-fab color="accent" (click)="nextBook()">
+        <button mat-mini-fab color="accent" [disabled]="currentBookCount === 66" (click)="nextBook()">
           <mat-icon>keyboard_double_arrow_right</mat-icon>
         </button>
 

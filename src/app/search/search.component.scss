@@ -1,0 +1,92 @@
+.search-container {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #303030;
+  opacity: 0;
+  transition-duration: 0.15s;
+  pointer-events: none;
+  overflow-y: scroll;
+
+  .search-navbar {
+    display: flex;
+    justify-content: space-between;
+    font-size: 22px;
+
+    .close-search {
+      scale: 1.9;
+    }
+  }
+  
+  .search-navbar p {
+    margin-left: 10px;
+  }
+  
+  .search-input {
+    width: 70%;
+    font-size: 18px;
+    margin: 20px auto;
+    display: flex;
+  }
+
+  .searched-verses {
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    width: 70%;
+    margin: 0 auto 35px;
+    border-radius: 5px;
+    &:hover {
+      cursor: pointer;
+      background-color: #444444;
+    }
+
+    .verse-reference-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .copy-verse {
+      color: red;
+      margin: 0;
+    }
+  }
+
+  .verse-reference {
+    opacity: 0.6;
+    font-size: 18px;
+    margin: 0;
+  }
+
+  .verse-content {
+    margin-top: 1px;
+    margin-bottom: 0;
+    font-size: 20px;
+    text-align-last: left;
+    text-align: justify;
+    border-radius: 15px;
+  }
+}
+
+.search-container.visible {
+  opacity: 1;
+  pointer-events: all
+}
+
+@media (max-width: 400px) {
+  .search-container {
+
+    .search-input {
+      font-size: 17px;
+      width: 90%;
+    }
+  }
+
+  .close-search {
+    scale: 1.5;
+    margin-top: 2px;
+  }
+}

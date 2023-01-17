@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { BibleApiService } from './bible-api.service';
 import { BibleTranslation, BibleBooksInfo, BookInfo, BibleVerseContent, BibleVerseContentInfo } from './model';
 import { Router, ActivatedRoute } from '@angular/router';
+import { SearchComponent } from './search/search.component';
 
 @Component({
   selector: 'app-root',
@@ -24,11 +25,12 @@ export class AppComponent implements OnInit {
   currentVerseContent?: Array<BibleVerseContent>;
   bookNames?: Array<string>;
   currentBookCount: number = 1;
+  @ViewChild('searchComponent') searchComponent!: SearchComponent;
 
   constructor(
     private api: BibleApiService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
   ){};
 
   getVerses(): Observable<BibleVerseContentInfo> {
@@ -84,6 +86,11 @@ export class AppComponent implements OnInit {
   updateUrl(): void {
     this.router.navigateByUrl(`${this.translationSelect.value}/${this.bookInfoForm.value.id}/${this.chapterForm.value}`);
   }
+
+  openSearch(sideNav: any): void {
+    this.searchComponent.toggleSearch();
+    sideNav.close();
+  }
   
   ngOnInit(): void {
     this.api.getContentInfo().subscribe(
@@ -100,6 +107,7 @@ export class AppComponent implements OnInit {
           this.translationSelect.setValue(route.get('translation'));
           this.bookInfoForm.setValue(this.currentBibleBookInfo?.getBookById(route.get('book')!));
           this.chapterForm.setValue(+route.get('chapter')!);
+          this.searchComponent.currentTranslation = route.get('translation')!;
         }
       }
     );
@@ -110,6 +118,7 @@ export class AppComponent implements OnInit {
      this.updateMenu();
      this.updateContent();
      this.updateUrl();
+     this.searchComponent.currentTranslation = this.currentTranslation;
     });
 
     this.bookInfoForm.valueChanges.subscribe(value => {

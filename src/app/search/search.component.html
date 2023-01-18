@@ -1,0 +1,24 @@
+<section #searchContainer class="search-container">
+  <mat-toolbar class="search-navbar" color="primary">
+    <p>Search verses</p>
+    <button mat-icon-button (click)="toggleSearch()">
+      <mat-icon class="close-search">close</mat-icon>
+    </button>
+  </mat-toolbar>
+  <mat-form-field class="search-input" [formControl]="searchInput" ngDefaultControl>
+    <input type="search" matInput placeholder="Search verses (3 characters required)">
+  </mat-form-field>
+  <ng-container *ngFor="let book of searchedContent">
+    <ng-container *ngFor="let chapter of book.chapterList">
+        <ng-container *ngFor="let verse of chapter.verseList">
+          <section class="searched-verses">
+            <div class="verse-reference-wrapper">
+              <p class="verse-reference">{{book.name}} {{chapter.no}}:{{verse.no}} </p>
+              <p class="copy-verse">Kopiuj</p>
+            </div>
+            <p class="verse-content" [innerHTML]="geterateSearchHTML(verse.value)"></p>
+          </section>
+        </ng-container>
+    </ng-container>
+  </ng-container>
+</section>

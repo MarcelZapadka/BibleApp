@@ -9,10 +9,12 @@ import { MaterialModule } from './material/material/material.module';
 import { BibleApiService } from './bible-api.service';
 import { ModelMapperService } from './model-mapper.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

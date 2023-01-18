@@ -3,6 +3,11 @@
   flex-direction: column;
   height: 100vh;
 
+  .navbar {
+    display: flex;
+    font-size: 22px;
+  }
+
   .main-content {
     flex-grow: 1;
     padding: 10px 170px;
@@ -16,6 +21,7 @@
       .verse-number {
         font-size: 18px;
         padding-top: 7.2px;
+        white-space: nowrap;
       }
     }
   }
@@ -33,4 +39,43 @@
   justify-content: center;
   gap: 30px;
   padding: 40px;
+}
+
+.button-wrapper {
+  display: flex;
+}
+
+.search-button {
+  margin: 20px auto;
+}
+
+.close-search {
+  scale: 2;
+}
+
+@media (max-width:400px) {
+  .main-container {
+
+    .navbar {
+      font-size: 16px;
+    }
+
+    .main-content   {
+      padding: 10px 10px;
+
+      .content-wrapper {
+
+        .verse-number   { 
+          font-size: 15px;
+          margin: 0;
+          padding-top: 17px;
+        }
+      }
+    }
+  }
+
+  .verse {
+    font-size: 17px;
+    margin-bottom: 0px;
+  }
 }

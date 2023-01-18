@@ -37,36 +37,40 @@
         <mat-form-field appearance="fill">
           <mat-label>Chapter</mat-label>
           <mat-select [formControl]="chapterForm">
-              <mat-option *ngFor="let chapterNo of currentChaptersRange" [value]="chapterNo">
+              <mat-option #chapterForm *ngFor="let chapterNo of currentChaptersRange" [value]="chapterNo">
                 {{chapterNo}}
               </mat-option>
           </mat-select>
         </mat-form-field>
       </mat-toolbar-row>
     </mat-toolbar>
+    <div class="button-wrapper">
+      <button class="search-button" mat-fab color="primary" aria-label="Search button" (click)="openSearch(sideNav)">
+        <mat-icon>search</mat-icon>
+      </button>
+    </div>
   </mat-sidenav>
   <mat-sidenav-content>
     <div class="main-container">
 
       <mat-toolbar class="navbar" color="primary">
-        <button mat-icon-button (click)="sideNav.open()">
-          <mat-icon>menu</mat-icon>
-        </button>
-        <p>{{currentBookInfo?.viewValue}}</p>
+          <button mat-icon-button (click)="sideNav.open()">
+            <mat-icon>menu</mat-icon>
+          </button>
+          <p>{{currentBookInfo?.viewValue}} {{chapterForm.value}}</p>
       </mat-toolbar>
 
-      <main class="main-content">
-        <section class="content-wrapper" *ngFor="let verse of currentVerseContent; index as i">
-          <p class="verse-number">
-            {{i + 1}}
-          </p>
-          <p>
-            -
-          </p>
-          <p>
-            {{verse?.value}}
-          </p>
-        </section>
+      <main class="main-content" >
+        <section>
+          <section  class="content-wrapper" *ngFor="let verse of currentVerseContent; index as i">
+            <p class="verse-number">
+              {{i + 1}}  -
+            </p>
+            <p class="verse">
+              {{verse?.value}}
+            </p>
+          </section>
+        </section>  
       </main>
 
       <mat-toolbar class="footer" color="primary">
@@ -82,8 +86,8 @@
         <button mat-mini-fab color="accent" [disabled]="currentBookCount === 66" (click)="nextBook()">
           <mat-icon>keyboard_double_arrow_right</mat-icon>
         </button>
-
       </mat-toolbar>
     </div>
+    <search-verses-component #searchComponent></search-verses-component>
   </mat-sidenav-content>
 </mat-sidenav-container>

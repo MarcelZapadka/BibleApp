@@ -37,3 +37,20 @@ export interface BibleVerseContentDTO {
   no: number,
   value: string
 }
+
+export interface BibleSearchedVerseContentInfoDTO {
+  chapterList: Array<BibleSearchedVerseChapterList>,
+  id: string,
+  name: string,
+}
+
+export interface BibleSearchedVerseChapterList {
+  no: number,
+  verseList: Array<BibleSearchedVerseContent>
+}
+
+export interface BibleSearchedVerseContent {
+  no: number,
+  value: string
+}
+

@@ -5,20 +5,41 @@
       <mat-icon class="close-search">close</mat-icon>
     </button>
   </mat-toolbar>
-  <mat-form-field class="search-input" [formControl]="searchInput" ngDefaultControl>
-    <input type="search" matInput placeholder="Search verses (3 characters required)">
-  </mat-form-field>
-  <ng-container *ngFor="let book of searchedContent">
-    <ng-container *ngFor="let chapter of book.chapterList">
-        <ng-container *ngFor="let verse of chapter.verseList">
-          <section class="searched-verses">
-            <div class="verse-reference-wrapper">
-              <p class="verse-reference">{{book.name}} {{chapter.no}}:{{verse.no}} </p>
-              <p class="copy-verse">Kopiuj</p>
-            </div>
-            <p class="verse-content" [innerHTML]="geterateSearchHTML(verse.value)"></p>
-          </section>
-        </ng-container>
+  <section class="search-form-field">
+    <mat-form-field class="search-input" [formControl]="searchInput" ngDefaultControl>
+      <input type="search" matInput placeholder="Search verses (3 characters required)" (keyup)="isLoading = true">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Szukaj w księgach:</mat-label>
+      <mat-select [formControl]="bookFilterForm">
+        <mat-option [value]="'Wszystkie księgi'">
+          Wszystkie księgi
+        </mat-option>
+        <mat-option *ngFor="let bookInfo of currentBook?.oldTestamentList;" [value]="bookInfo.viewValue">
+          {{bookInfo.viewValue}}
+        </mat-option>
+        <mat-option *ngFor="let bookInfo of currentBook?.newTestamentList;" [value]="bookInfo.viewValue">
+          {{bookInfo.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </section>
+  <ng-container *ngIf="!isLoading">
+    <ng-container *ngFor="let book of searchedContent; index as i">
+      <ng-container *ngFor="let chapter of book.chapterList;">
+          <ng-container *ngFor="let verse of chapter.verseList">
+            <section class="searched-verses" (click)="redirectToBible(i, chapter.no)">
+              <div class="verse-reference-wrapper">
+                <p class="verse-reference">{{book.name}} {{chapter.no}}:{{verse.no}}</p>
+                <p #p class="copy-verse" [cdkCopyToClipboard]="generateCopiedText(book.name, chapter.no, verse.no, verse.value)" (click)="openSnackBar()">Kopiuj</p>
+              </div>
+              <p class="verse-content" [innerHTML]="generateSearchHTML(verse.value)"></p>
+            </section>
+          </ng-container>
+      </ng-container>
     </ng-container>
   </ng-container>
+  <div *ngIf="isLoading" class="loading-indicator">
+    <mat-spinner color="accent"></mat-spinner>
+  </div>
 </section>

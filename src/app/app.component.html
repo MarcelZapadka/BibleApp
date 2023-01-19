@@ -88,6 +88,6 @@
         </button>
       </mat-toolbar>
     </div>
-    <search-verses-component #searchComponent></search-verses-component>
+    <search-verses-component #searchComponent [currentBook]="currentBibleBookInfo" (redirect)="setBibleContentByUrl()"></search-verses-component>
   </mat-sidenav-content>
 </mat-sidenav-container>

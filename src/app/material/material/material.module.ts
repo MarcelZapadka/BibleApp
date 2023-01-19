@@ -5,6 +5,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatInputModule } from '@angular/material/input';
+import {ClipboardModule} from '@angular/cdk/clipboard';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 const MaterialComponents = [
   MatToolbarModule,
@@ -13,6 +16,9 @@ const MaterialComponents = [
   MatIconModule,
   MatSidenavModule,
   MatInputModule,
+  ClipboardModule,
+  MatSnackBarModule,
+  MatProgressSpinnerModule
 ]
 
 @NgModule({

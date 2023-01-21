@@ -91,6 +91,18 @@ export class AppComponent implements OnInit {
     this.searchComponent.toggleSearch();
     sideNav.close();
   }
+
+  setBibleContentByUrl(): void {
+    let route = this.activatedRoute.firstChild!.snapshot.paramMap;
+    if (!route.has("translation")) {
+      this.translationSelect.setValue(this.bibleTranslations![0].id);
+    } else {
+      this.searchComponent.currentTranslation = route.get('translation')!;
+      this.translationSelect.setValue(route.get('translation'));
+      this.bookInfoForm.setValue(this.currentBibleBookInfo?.getBookById(route.get('book')!));
+      this.chapterForm.setValue(+route.get('chapter')!);
+    }
+  }
   
   ngOnInit(): void {
     this.api.getContentInfo().subscribe(
@@ -100,15 +112,7 @@ export class AppComponent implements OnInit {
       },
       error => console.log(error),
       () => {       
-        let route = this.activatedRoute.firstChild!.snapshot.paramMap;
-        if (!route.has("translation")) {
-          this.translationSelect.setValue(this.bibleTranslations![0].id);
-        } else {
-          this.translationSelect.setValue(route.get('translation'));
-          this.bookInfoForm.setValue(this.currentBibleBookInfo?.getBookById(route.get('book')!));
-          this.chapterForm.setValue(+route.get('chapter')!);
-          this.searchComponent.currentTranslation = route.get('translation')!;
-        }
+        this.setBibleContentByUrl();
       }
     );
 

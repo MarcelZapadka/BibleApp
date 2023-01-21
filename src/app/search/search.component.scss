@@ -25,10 +25,10 @@
   }
   
   .search-input {
-    width: 70%;
+    width: 56%;
     font-size: 18px;
-    margin: 20px auto;
-    display: flex;
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
 
   .searched-verses {
@@ -52,6 +52,9 @@
     .copy-verse {
       color: red;
       margin: 0;
+      &:hover {
+        color: yellow;
+      }
     }
   }
 
@@ -69,6 +72,21 @@
     text-align: justify;
     border-radius: 15px;
   }
+
+  .loading-indicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 55%;
+  }
+
+  .search-form-field {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+  }
 }
 
 .search-container.visible {
@@ -83,10 +101,24 @@
       font-size: 17px;
       width: 90%;
     }
+
+    .searched-verses {
+      width: 90%;
+      margin-bottom: 10px;
+    }
+
+    .verse-content {
+      font-size: 17.5px;
+    }
+
+    .verse-reference {
+      font-size: 17px;
+    }
   }
 
   .close-search {
     scale: 1.5;
     margin-top: 2px;
   }
+
 }
